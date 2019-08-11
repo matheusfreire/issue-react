@@ -11,5 +11,7 @@ web-build/
 web-report/
 
 yarn.lock
-yarn-erro.log
+yarn-error.log
 .expo*
+.watchmanconfig
+package-lock.json
