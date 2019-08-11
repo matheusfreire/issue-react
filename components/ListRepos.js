@@ -1,18 +1,32 @@
-import {React, Component} from 'react'
+import React,{ Component} from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native'
 import { List, Card } from 'react-native-elements'
 
-import { AppLoading } from 'expo';
+import { AppLoading } from 'expo'
+import { connect } from 'react-redux'
 
 import { fetchRepos} from '../utils/api'
 import { getRepos, addRepo } from '../actions'
 
 import EmptyRepos from './EmptyRepos'
-import { white } from '../utils/colors';
+import { white } from '../utils/colors'
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: white,
+    },
+    card: {
+        borderRadius: 5
+    }
+})
 
 class ListRepos extends Component {
+    static navigationOptions = {
+        title: 'Repos'
+    }
     state = {
-        loading: true
+        loading: false
     }
 
     componentDidMount(){
@@ -32,7 +46,7 @@ class ListRepos extends Component {
             })
             .catch((error) => {
                 console.log("error", error.message)
-                this.setState({loading: false})
+                // this.setState(() => { loading: false })
             })
     }
 
@@ -42,7 +56,7 @@ class ListRepos extends Component {
 
         if(loading){
             return (
-                <View style={StyleSheet.container}>
+                <View style={styles.container}>
                       <AppLoading />
                 </View>
             )
@@ -71,14 +85,6 @@ class ListRepos extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: white,
-    },
-    card: {
-        borderRadius: 5
-    }
-})
+
 const mapStateToProps = (state) => ({ repos: state })
 export default connect(mapStateToProps)(ListRepos)
