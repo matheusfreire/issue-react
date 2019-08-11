@@ -6,8 +6,9 @@ import { AppLoading } from 'expo'
 import { connect } from 'react-redux'
 
 import { fetchRepos} from '../utils/api'
-import { getRepos, addRepo } from '../actions'
+import { getRepos } from '../actions'
 
+import NewRepo from './NewRepo'
 import EmptyRepos from './EmptyRepos'
 import { white } from '../utils/colors'
 
@@ -63,11 +64,12 @@ class ListRepos extends Component {
         }
 
         return(
+                
             <ScrollView style={styles.container}>
-                   {repos ?
-                           <List>
-                               {Object.keys(repos).map((key) => (
-                                  <TouchableOpacity key={key}
+                {repos ?
+                        <List>
+                            {Object.keys(repos).map((key) => (
+                                <TouchableOpacity key={key}
                                     onPress={() => this.props.navigation.navigate('Issues', { repo: key })}>
                                         <Card style={styles.card} title={repos[key].title}>
                                             <Text style={{ marginBottom: 10, textAlign: 'center' }}>
@@ -75,11 +77,14 @@ class ListRepos extends Component {
                                             </Text>
                                         </Card>
                                     </TouchableOpacity> 
-                               ))}
-                           </List>
+                            ))}
+                        </List>
                         :
-                        <EmptyRepos />
-                   }     
+                        <View>
+                            <NewRepo />
+                            <EmptyRepos />
+                        </View>
+                }     
             </ScrollView>
         )
     }
