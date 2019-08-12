@@ -66,6 +66,7 @@ class ListRepos extends Component {
         return(
                 
             <ScrollView style={styles.container}>
+                <NewRepo />
                 {repos ?
                         <FlatList>
                             {Object.keys(repos).map((key) => (
@@ -81,7 +82,6 @@ class ListRepos extends Component {
                         </FlatList>
                         :
                         <View>
-                            <NewRepo />
                             <EmptyRepos />
                         </View>
                 }     
