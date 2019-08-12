@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native'
 
-const REPOS_STORAGE_KEY = 'flashcard:repositories'
+const REPOS_STORAGE_KEY = 'repositories'
 
 export function fetchRepos() {
     return AsyncStorage.getItem(REPOS_STORAGE_KEY).then(result => {

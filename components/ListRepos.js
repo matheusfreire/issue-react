@@ -1,6 +1,6 @@
 import React,{ Component} from 'react'
-import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native'
-import { List, Card } from 'react-native-elements'
+import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView, FlatList } from 'react-native'
+import { Card } from 'react-native-elements'
 
 import { AppLoading } from 'expo'
 import { connect } from 'react-redux'
@@ -67,18 +67,18 @@ class ListRepos extends Component {
                 
             <ScrollView style={styles.container}>
                 {repos ?
-                        <List>
+                        <FlatList>
                             {Object.keys(repos).map((key) => (
                                 <TouchableOpacity key={key}
                                     onPress={() => this.props.navigation.navigate('Issues', { repo: key })}>
-                                        <Card style={styles.card} title={repos[key].title}>
+                                        <Card style={styles.card} title={repos[key]}>
                                             <Text style={{ marginBottom: 10, textAlign: 'center' }}>
-                                                {`${repos[key].title}`}
+                                                {`${repos[key]}`}
                                             </Text>
                                         </Card>
                                     </TouchableOpacity> 
                             ))}
-                        </List>
+                        </FlatList>
                         :
                         <View>
                             <NewRepo />

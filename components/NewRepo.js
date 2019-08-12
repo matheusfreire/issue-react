@@ -1,11 +1,31 @@
 import React, { Component } from 'react';
-import {View, TextInput, Keyboard } from 'react-native'
+import {View, TextInput, Keyboard, StyleSheet } from 'react-native'
 import { IconButton, Colors } from 'react-native-paper'
 
+import { connect } from 'react-redux'
 import { addRepo } from '../actions'
-import { saveNewRepo } from '../utils/api';
+import { saveNewRepo } from '../utils/api'
 
-export default class UselessTextInput extends Component {
+const styles = StyleSheet.create({
+    container: {
+        flexDirection:'row',
+        flex: 1
+    },
+    input: {
+        borderRadius: 5,
+        flex: 2,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginStart: 5,
+        marginTop: 5
+    },
+    button: {
+        flex: 0.1
+    }
+})
+
+
+class NewRepo extends Component {
   constructor(props) {
     super(props);
     this.state = { newrepo: '' };
@@ -18,11 +38,11 @@ export default class UselessTextInput extends Component {
             alert("Please, a url of repo")
             return;
         }
-        let regex = new RegExp("\w+\/\w+")
-        if(!regex.test(newrepo)){
-            alert("Provide a repo in pattern organization/repository")
-            return;
-        }
+        // let regex = new RegExp("\w+\/\w+")
+        // if(!regex.test(newrepo)){
+        //     alert("Provide a repo in pattern organization/repository")
+        //     return;
+        // }
         saveNewRepo({newrepo}).then(() => {
             this.props.dispatch(addRepo(newrepo))
             this.setState({newrepo: ''})
@@ -31,9 +51,9 @@ export default class UselessTextInput extends Component {
 
   render() {
     return (
-        <View style={{flexDirection:'row', flex: 1}}>
+        <View style={styles.container}>
             <TextInput 
-                style={{flex: 2, borderColor: 'gray', borderWidth: 1, marginStart: 5}}
+                style={styles.input}
                 onChangeText={(newrepo) => this.setState({newrepo})}
                 placeholderTextColor='black'
                 underlineColorAndroid='transparent'
@@ -43,7 +63,7 @@ export default class UselessTextInput extends Component {
                   ]}
                 value={this.state.newrepo}
             />
-            <IconButton style={{flex: 0.1}}
+            <IconButton style={styles.button}
                 icon="add"
                 color={Colors.black}
                 size={20}
@@ -54,3 +74,5 @@ export default class UselessTextInput extends Component {
     );
   }
 }
+
+export default connect()(NewRepo)
